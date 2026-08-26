@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import type { Job, JobListResponse } from '@/types';
 import { StatusBadge, PriorityBadge } from '@/components/StatusBadge';
 import CreateJobModal from '@/components/CreateJobModal';
+import { API_BASE } from '@/lib/api';
 
 export default function JobsPage() {
   const [data, setData] = useState<JobListResponse | null>(null);
@@ -18,7 +19,7 @@ export default function JobsPage() {
       const params = new URLSearchParams({ page: String(page), page_size: '20' });
       if (statusFilter) params.set('status', statusFilter);
       if (search) params.set('search', search);
-      const res = await fetch(`/api/jobs?${params}`, {
+      const res = await fetch(`${API_BASE}/api/jobs?${params}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setData(await res.json());
@@ -37,7 +38,7 @@ export default function JobsPage() {
 
   const handleAction = async (jobId: string, action: 'run' | 'cancel' | 'delete') => {
     const method = action === 'delete' ? 'DELETE' : 'POST';
-    const url = action === 'delete' ? `/api/jobs/${jobId}` : `/api/jobs/${jobId}/${action}`;
+    const url = action === 'delete' ? `${API_BASE}/api/jobs/${jobId}` : `${API_BASE}/api/jobs/${jobId}/${action}`;
     await fetch(url, {
       method,
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },

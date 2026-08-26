@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { API_BASE } from '@/lib/api';
 
 interface Props {
   open: boolean;
@@ -28,7 +29,7 @@ export default function CreateJobModal({ open, onClose, onCreated }: Props) {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/jobs', {
+      const res = await fetch(`${API_BASE}/api/jobs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

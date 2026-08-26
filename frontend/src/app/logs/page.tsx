@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import type { Job, LogEntry } from '@/types';
+import { API_BASE } from '@/lib/api';
 
 const levelColors: Record<string, string> = {
   info: 'text-blue-400',
@@ -20,7 +21,7 @@ export default function LogsPage() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch('/api/jobs?page_size=50', {
+        const res = await fetch(`${API_BASE}/api/jobs?page_size=50`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         const data = await res.json();
@@ -37,7 +38,7 @@ export default function LogsPage() {
 
   useEffect(() => {
     if (selectedJobId) {
-      fetch(`/api/jobs/${selectedJobId}/logs?limit=200`, {
+      fetch(`${API_BASE}/api/jobs/${selectedJobId}/logs?limit=200`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       })
         .then((r) => r.json())

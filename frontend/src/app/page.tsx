@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import type { DashboardStats, Job } from '@/types';
 import { StatusBadge } from '@/components/StatusBadge';
+import { API_BASE } from '@/lib/api';
 
 function StatCard({ label, value, icon, color }: { label: string; value: number; icon: string; color: string }) {
   return (
@@ -27,10 +28,10 @@ export default function DashboardPage() {
     async function load() {
       try {
         const [s, j] = await Promise.all([
-          fetch('/api/dashboard/stats', {
+          fetch(`${API_BASE}/api/dashboard/stats`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
           }).then((r) => r.json()),
-          fetch('/api/jobs?page_size=10', {
+          fetch(`${API_BASE}/api/jobs?page_size=10`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
           }).then((r) => r.json()),
         ]);

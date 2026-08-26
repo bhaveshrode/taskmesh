@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import type { Workflow, WorkflowExecution } from '@/types';
 import { StatusBadge } from '@/components/StatusBadge';
+import { API_BASE } from '@/lib/api';
 
 export default function WorkflowsPage() {
   const [workflows, setWorkflows] = useState<Workflow[]>([]);
@@ -15,7 +16,7 @@ export default function WorkflowsPage() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch('/api/workflows', {
+        const res = await fetch(`${API_BASE}/api/workflows`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setWorkflows(await res.json());
@@ -28,7 +29,7 @@ export default function WorkflowsPage() {
 
   useEffect(() => {
     if (selected) {
-      fetch(`/api/workflows/${selected.id}/executions`, {
+      fetch(`${API_BASE}/api/workflows/${selected.id}/executions`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       })
         .then((r) => r.json())
@@ -38,7 +39,7 @@ export default function WorkflowsPage() {
   }, [selected]);
 
   const handleRun = async (id: string) => {
-    await fetch(`/api/workflows/${id}/run`, {
+    await fetch(`${API_BASE}/api/workflows/${id}/run`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });
@@ -46,7 +47,7 @@ export default function WorkflowsPage() {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this workflow?')) return;
-    await fetch(`/api/workflows/${id}`, {
+    await fetch(`${API_BASE}/api/workflows/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });
@@ -253,7 +254,7 @@ function CreateWorkflowModal({ onClose, onCreated }: { onClose: () => void; onCr
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/workflows', {
+      const res = await fetch(`${API_BASE}/api/workflows`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -404,7 +405,7 @@ function EditWorkflowModal({ workflow, onClose, onSaved }: { workflow: Workflow;
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`/api/workflows/${workflow.id}`, {
+      const res = await fetch(`${API_BASE}/api/workflows/${workflow.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
         body: JSON.stringify(form),

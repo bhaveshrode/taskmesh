@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import type { Worker } from '@/types';
 import { StatusBadge } from '@/components/StatusBadge';
-import { deleteWorker, reactivateWorker } from '@/lib/api';
+import { deleteWorker, reactivateWorker, API_BASE } from '@/lib/api';
 
 export default function WorkersPage() {
   const [workers, setWorkers] = useState<Worker[]>([]);
@@ -11,7 +11,7 @@ export default function WorkersPage() {
 
   const loadWorkers = async () => {
     try {
-      const res = await fetch('/api/workers', {
+      const res = await fetch(`${API_BASE}/api/workers`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setWorkers(await res.json());
