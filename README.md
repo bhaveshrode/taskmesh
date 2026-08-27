@@ -274,4 +274,4 @@ MIT
 
 ---
 
-Built with 🐝 by Bhavesh
+Built by Bhavesh
