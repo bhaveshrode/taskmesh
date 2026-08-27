@@ -4,20 +4,6 @@ A distributed job orchestration and workflow platform built with FastAPI, Next.j
 
 TaskMesh allows users to create and execute background jobs, compose jobs into dependency-based workflows, and monitor worker processes responsible for execution. Redis handles distributed job queuing and locking, while PostgreSQL maintains persistent job, workflow, execution, and worker state.
 
-## Screenshots
-
-### Dashboard
-![Dashboard](docs/screenshot-dashboard.png)
-
-### Jobs
-![Jobs](docs/screenshot-jobs.png)
-
-### Workflow DAG
-![Workflows](docs/screenshot-workflows.png)
-
-### Workers
-![Workers](docs/screenshot-workers.png)
-
 ## Features
 
 - **Dashboard** - Monitor jobs, workflows, workers, and system activity with automatic status refresh
